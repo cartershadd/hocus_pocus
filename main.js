@@ -2,6 +2,7 @@
 
 let canvas;
 let ctx;
+let lastRender;
 
 function update(progress) {
     // Move characters
@@ -11,6 +12,15 @@ function draw() {
     ctx.font = '40pt Calibri';
     ctx.fillStyle = 'blue';
     ctx.fillText('Hello World!', 100, 100);
+}
+
+
+function keyUp(event) {
+
+}
+
+function keyDown(event) {
+
 }
 
 // Main game loop run forever
@@ -32,9 +42,9 @@ window.onload = function() {
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // window.addEventListener('keydown', onKeyDown, true);
-    // window.addEventListener('keyup', onKeyUp, true);
+    window.addEventListener('keydown', keyDown, true);
+    window.addEventListener('keyup', keyUp, true);
 
-    var lastRender = 0;
+    lastRender = 0;
     window.requestAnimationFrame(loop);
 };
