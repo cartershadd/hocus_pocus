@@ -1,10 +1,11 @@
 
 
 let canvas = document.getElementById("canvas");
-let ctx = canvas.canvas.getContext('2d');
+let ctx = canvas.getContext('2d');
 
+console.log("test");
 
 // do cool things with the context
 context.font = '40pt Calibri';
 context.fillStyle = 'blue';
-context.fillText('Hello World!', 150, 100);
+context.fillText('Hello World!', 100, 100);
