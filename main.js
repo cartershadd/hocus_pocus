@@ -1,17 +1,15 @@
-
-
 let canvas;
 let ctx;
+let witch;
 let lastRender;
 
 function update(progress) {
     // Move characters
+    witch.update(progress);
 }
 
 function draw() {
-    ctx.font = '40pt Calibri';
-    ctx.fillStyle = 'blue';
-    ctx.fillText('Hello World!', 100, 100);
+        witch.draw(ctx)
 }
 
 
@@ -44,6 +42,9 @@ window.onload = function() {
 
     window.addEventListener('keydown', keyDown, true);
     window.addEventListener('keyup', keyUp, true);
+
+
+    witch = new Witch(3, 100, 100);
 
     lastRender = 0;
     window.requestAnimationFrame(loop);

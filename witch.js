@@ -3,14 +3,16 @@ class Witch {
         this.lives = lives;
         this.x = x;
         this.y = y;
+        this.speed = 1;
     }
 
 
-    draw() {
-
+    draw(ctx) {
+        ctx.fillRect(this.x, this.y, 100, 100);
     }
 
-    update() {
+    update(progress) {
+        this.y += this.speed * progress;
 
     }
 
