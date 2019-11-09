@@ -6,6 +6,6 @@ let ctx = canvas.getContext('2d');
 console.log("test");
 
 // do cool things with the context
-context.font = '40pt Calibri';
-context.fillStyle = 'blue';
-context.fillText('Hello World!', 100, 100);
+ctx.font = '40pt Calibri';
+ctx.fillStyle = 'blue';
+ctx.fillText('Hello World!', 100, 100);
