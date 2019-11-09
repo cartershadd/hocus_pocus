@@ -15,11 +15,17 @@ function draw() {
 
 
 function keyUp(event) {
-
+    if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+        witch.speed = 0;
+    }
 }
 
 function keyDown(event) {
-
+    if (event.key === "ArrowUp") {
+        witch.speed = 1;
+    } else if (event.key === "ArrowDown") {
+        witch.speed = -1;
+    }
 }
 
 // Main game loop run forever
