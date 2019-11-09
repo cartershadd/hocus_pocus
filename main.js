@@ -9,7 +9,8 @@ function update(progress) {
 }
 
 function draw() {
-        witch.draw(ctx)
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    witch.draw(ctx)
 }
 
 
@@ -33,11 +34,11 @@ function loop(timestamp) {
 }
 
 
-window.onload = function() {
+window.onload = function () {
     console.log("Engage");
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext('2d');
-    canvas.width  = window.innerWidth;
+    canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
     window.addEventListener('keydown', keyDown, true);
