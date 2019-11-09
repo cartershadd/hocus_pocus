@@ -1,12 +1,7 @@
 
 
-let canvas = document.getElementById("canvas");
-let ctx = canvas.getContext('2d');
-canvas.width  = window.innerWidth;
-canvas.height = window.innerHeight;
-
-console.log("Engage");
-
+let canvas;
+let ctx;
 
 function update(progress) {
     // Move characters
@@ -28,5 +23,18 @@ function loop(timestamp) {
     lastRender = timestamp;
     window.requestAnimationFrame(loop)
 }
-var lastRender = 0;
-window.requestAnimationFrame(loop);
+
+
+window.onload = function() {
+    console.log("Engage");
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext('2d');
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // window.addEventListener('keydown', onKeyDown, true);
+    // window.addEventListener('keyup', onKeyUp, true);
+
+    var lastRender = 0;
+    window.requestAnimationFrame(loop);
+};
