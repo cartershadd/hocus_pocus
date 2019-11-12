@@ -1,16 +1,40 @@
 let canvas;
 let ctx;
 let witch;
+let enemyList;
 let lastRender;
+let lastEnemyTime;
 
-function update(progress) {
+// adds enemies every 500 ms
+// moves characters
+// does collision detection
+// takes in the timestamp and the progress (length of time since last called)
+// returns if player is alive or dead
+function update(timestamp, progress) {
+    //add enemy every 500 ms
+    if (timestamp > lastEnemyTime + 500) {
+        lastEnemyTime = timestamp;
+        let enemy = new Enemy(1, window.innerWidth - 100, 150);
+        enemyList.push(enemy);
+    }
+
     // Move characters
     witch.update(progress);
+
+    for (var i = 0; i < enemyList.length; i++) {
+        enemyList[i].update(progress);
+    }
+
+    return witch.collision(enemyList);
 }
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    witch.draw(ctx)
+    witch.draw(ctx);
+
+    for (var i = 0; i < enemyList.length; i++) {
+        enemyList[i].draw(ctx);
+    }
 }
 
 
@@ -22,9 +46,9 @@ function keyUp(event) {
 
 function keyDown(event) {
     if (event.key === "ArrowUp") {
-        witch.speed = 1;
-    } else if (event.key === "ArrowDown") {
         witch.speed = -1;
+    } else if (event.key === "ArrowDown") {
+        witch.speed = 1;
     }
 }
 
@@ -32,11 +56,14 @@ function keyDown(event) {
 function loop(timestamp) {
     var progress = timestamp - lastRender;
 
-    update(progress);
+    let alive = update(timestamp, progress);
+
     draw();
 
     lastRender = timestamp;
-    window.requestAnimationFrame(loop)
+    if (alive) {
+        window.requestAnimationFrame(loop)
+    }
 }
 
 
@@ -52,6 +79,10 @@ window.onload = function () {
 
 
     witch = new Witch(3, 100, 100);
+
+    enemyList = [];
+
+    lastEnemyTime = 0;
 
     lastRender = 0;
     window.requestAnimationFrame(loop);
