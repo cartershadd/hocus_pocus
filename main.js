@@ -14,7 +14,7 @@ function update(timestamp, progress) {
     //add enemy every 500 ms
     if (timestamp > lastEnemyTime + 500) {
         lastEnemyTime = timestamp;
-        let enemy = new Enemy(1, window.innerWidth - 100, 150);
+        let enemy = new Enemy(1, window.innerWidth - 100, window.innerHeight * Math.random(), window.innerHeight * Math.random());
         enemyList.push(enemy);
     }
 
