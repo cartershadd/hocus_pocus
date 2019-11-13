@@ -1,17 +1,20 @@
 class Witch {
-    constructor(lives, x, y) {
+    constructor(lives, x, y, img) {
         this.lives = lives;
         this.x = x;
         this.y = y;
-        this.w = 100;
-        this.h = 100;
+        this.w = 200;
+        this.h = 200;
         this.speed = 0;
+        this.img = img;
     }
 
 
     draw(ctx) {
-        ctx.fillRect(this.x, this.y, this.w, this.h);
+        ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
+        this.img.src = "witch.svg";
     }
+
 
     update(progress) {
         this.y += this.speed * progress;

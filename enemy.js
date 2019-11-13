@@ -3,9 +3,9 @@ class Enemy {
         this.health = health;
         this.x = x;
         this.y = y;
-        this.w = 100;
-        this.h = 100;
-        this.speed = -1;
+        this.w = 80;
+        this.h = 80;
+        this.speed = speed;
     }
 
     draw(ctx) {

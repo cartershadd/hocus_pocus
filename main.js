@@ -14,7 +14,7 @@ function update(timestamp, progress) {
     //add enemy every 500 ms
     if (timestamp > lastEnemyTime + 500) {
         lastEnemyTime = timestamp;
-        let enemy = new Enemy(1, window.innerWidth - 100, window.innerHeight * Math.random(), window.innerHeight * Math.random());
+        let enemy = new Enemy(1, window.innerWidth, window.innerHeight * Math.random(), -2 * Math.random());
         enemyList.push(enemy);
     }
 
@@ -77,8 +77,9 @@ window.onload = function () {
     window.addEventListener('keydown', keyDown, true);
     window.addEventListener('keyup', keyUp, true);
 
+    let img = new Image();
 
-    witch = new Witch(3, 100, 100);
+    witch = new Witch(3, 100, 100, img);
 
     enemyList = [];
 
