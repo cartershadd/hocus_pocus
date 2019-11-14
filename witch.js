@@ -9,14 +9,19 @@ class Witch {
         this.img = img;
     }
 
-
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
+        this.img.src = "witch.svg";
     }
-
 
     update(progress) {
         this.y += this.speed * progress;
+        if (this.y < 0) {
+            this.y = window.innerHeight;
+        }
+        if (this.y > window.innerHeight) {
+            this.y = 0;
+        }
     }
 
     // checks collision on a single enemy
