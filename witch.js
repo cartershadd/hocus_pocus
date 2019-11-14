@@ -12,6 +12,10 @@ class Witch {
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
         this.img.src = "witch.svg";
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "left";
+        ctx.fillText(`${this.lives}`, 10, 50)
     }
 
     update(progress) {
@@ -44,7 +48,7 @@ class Witch {
                 this.lives -= 1;
                 enemyList.splice(i, 1);
                 i--;
-                console.log("You lost a life, and have " + this.lives + " remaining.")
+                console.log("You lost a life, and have " + this.lives + " remaining.");
                 if (this.lives === 0) {
                     alert("You have lost the game :C");
                     return false
