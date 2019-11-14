@@ -78,6 +78,7 @@ window.onload = function () {
     window.addEventListener('keyup', keyUp, true);
 
     let img = new Image();
+    img.src = "witch.svg";
 
     witch = new Witch(3, 100, 100, img);
 
