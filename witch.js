@@ -3,15 +3,16 @@ class Witch {
         this.lives = lives;
         this.x = x;
         this.y = y;
-        this.w = 200;
-        this.h = 200;
-        this.speed = 0;
+        this.w = 150;
+        this.h = 150;
+        this.leftRight = 0;
+        this.upDown = 0;
         this.img = img;
     }
 
     draw(ctx) {
+        // this.img.src = "witch.svg";
         ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
-        this.img.src = "witch.svg";
         ctx.font = "30px Arial";
         ctx.fillStyle = "black";
         ctx.textAlign = "left";
@@ -19,22 +20,30 @@ class Witch {
     }
 
     update(progress) {
-        this.y += this.speed * progress;
+        this.y += this.upDown * progress;
+        this.x += this.leftRight * progress;
+
         if (this.y < 0) {
             this.y = window.innerHeight;
         }
         if (this.y > window.innerHeight) {
             this.y = 0;
         }
+        if (this.x < 0) {
+            this.x = window.innerWidth;
+        }
+        if (this.x > window.innerWidth) {
+            this.x = 0;
+        }
     }
 
     // checks collision on a single enemy
     // returns if enemy collided or not
-    checkCollision(enemy) {
-        let a = Math.max(this.y, enemy.y);
-        let b = Math.min(this.y + this.h, enemy.y + enemy.h);
-        let c = Math.max(this.x, enemy.x);
-        let d = Math.min(this.x + this.w, enemy.x + enemy.w);
+    checkCollision(larry) {
+        let a = Math.max(this.y, larry.y);
+        let b = Math.min(this.y + this.h, larry.y + larry.h);
+        let c = Math.max(this.x, larry.x);
+        let d = Math.min(this.x + this.w, larry.x + larry.w);
         let yOverlap = b > a;
         let xOverlap = c < d;
         return yOverlap && xOverlap;

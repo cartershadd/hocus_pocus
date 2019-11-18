@@ -4,6 +4,9 @@ let witch;
 let enemyList;
 let lastRender;
 let lastEnemyTime;
+let larryImg;
+let festerImg;
+let bleuImg;
 
 // adds enemies every 500 ms
 // moves characters
@@ -14,8 +17,17 @@ function update(timestamp, progress) {
     //add enemy every 500 ms
     if (timestamp > lastEnemyTime + 500) {
         lastEnemyTime = timestamp;
-        let enemy = new Enemy(1, window.innerWidth, window.innerHeight * Math.random(), -2 * Math.random());
-        enemyList.push(enemy);
+
+        if (Math.random() > 0.5) {
+            let fester = new Fester(1, window.innerWidth, window.innerHeight * Math.random(), -2 * Math.random(), festerImg);
+            enemyList.push(fester);
+        } else if (Math.random() > 0.25) {
+            let larry = new Larry(1, window.innerWidth, window.innerHeight * Math.random(), -2 * Math.random(), larryImg);
+            enemyList.push(larry);
+        } else {
+            let bleu = new Bleu(1, window.innerWidth, window.innerHeight * Math.random(), -2 * Math.random(), bleuImg);
+            enemyList.push(bleu);
+        }
     }
 
     // Move characters
@@ -39,16 +51,21 @@ function draw() {
 
 
 function keyUp(event) {
-    if (event.key === "ArrowUp" || event.key === "ArrowDown") {
-        witch.speed = 0;
+    if (event.key === "ArrowUp" || event.key === "ArrowDown" || event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        witch.upDown = 0;
+        witch.leftRight = 0;
     }
 }
 
 function keyDown(event) {
     if (event.key === "ArrowUp") {
-        witch.speed = -1;
+        witch.upDown = -1;
     } else if (event.key === "ArrowDown") {
-        witch.speed = 1;
+        witch.upDown = 1;
+    } else if (event.key === "ArrowLeft") {
+        witch.leftRight = -1;
+    } else if (event.key === "ArrowRight") {
+        witch.leftRight = 1;
     }
 }
 
@@ -80,7 +97,16 @@ window.onload = function () {
     let img = new Image();
     img.src = "witch.svg";
 
-    witch = new Witch(3, 100, 100, img);
+    witch = new Witch(10, 100, 100, img);
+
+    larryImg = new Image();
+    larryImg.src = "larry.svg";
+
+    festerImg = new Image();
+    festerImg.src = "fester.svg";
+
+    bleuImg = new Image();
+    bleuImg.src = "bleu.svg";
 
     enemyList = [];
 
