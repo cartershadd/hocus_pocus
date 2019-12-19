@@ -1,10 +1,10 @@
-class Bleu {
+class Moon {
     constructor(health, x, y, speedY, speedX, img) {
-    this.health = health;
+        this.health = health;
         this.x = x;
         this.y = y;
-        this.w = 70;
-        this.h = 70;
+        this.w = window.innerHeight/2;
+        this.h = window.innerHeight/2;
         this.speedY = speedY;
         this.speedX = speedX;
         this.img = img;

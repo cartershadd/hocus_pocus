@@ -2,11 +2,18 @@ let canvas;
 let ctx;
 let witch;
 let enemyList;
+let friendList;
+let lastFriendTime;
 let lastRender;
 let lastEnemyTime;
 let larryImg;
 let festerImg;
 let bleuImg;
+let broomImg;
+let cauldronImg;
+let moonImg;
+let teaImg;
+let backgroundImg;
 
 // adds enemies every 500 ms
 // moves characters
@@ -19,14 +26,76 @@ function update(timestamp, progress) {
         lastEnemyTime = timestamp;
 
         if (Math.random() > 0.5) {
-            let fester = new Fester(1, window.innerWidth, window.innerHeight * Math.random(), -2 * Math.random(), festerImg);
+            let fester = new Fester(
+                1,
+                window.innerWidth * Math.random(),
+                window.innerHeight,
+                -0.05 * Math.random(),
+                -0.3 * Math.random(),
+                festerImg);
             enemyList.push(fester);
-        } else if (Math.random() > 0.25) {
-            let larry = new Larry(1, window.innerWidth, window.innerHeight * Math.random(), -2 * Math.random(), larryImg);
+        } else if (Math.random() > 0.45) {
+            let larry = new Larry(
+                1,
+                window.innerWidth,
+                window.innerHeight * Math.random(),
+                -0.15 * Math.random(),
+                -0.1 * Math.random(),
+                larryImg);
             enemyList.push(larry);
         } else {
-            let bleu = new Bleu(1, window.innerWidth, window.innerHeight * Math.random(), -2 * Math.random(), bleuImg);
+            let bleu = new Bleu(
+                1,
+                window.innerWidth * Math.random(),
+                0,
+                1.25 * Math.random(),
+                -0.75 * Math.random(),
+                bleuImg);
             enemyList.push(bleu);
+        }
+    }
+
+
+    // add good guy every 500 ms
+    if (timestamp > lastFriendTime + 500) {
+        lastFriendTime = timestamp;
+
+        if (Math.random() > 0.35) {
+            let broom = new Broom(
+                1,
+                window.innerWidth,
+                window.innerHeight * Math.random(),
+                -0.75 * Math.random(),
+                -1 * Math.random(),
+                broomImg);
+            friendList.push(broom);
+        } else if (Math.random() > 0.95) {
+            let moon = new Moon(
+                1,
+                window.innerWidth,
+                window.innerHeight * Math.random(),
+                -0.65 * Math.random(),
+                -0.5 * Math.random(),
+                moonImg);
+            friendList.push(moon);
+        } else if (Math.random() > 0.15) {
+            let tea = new Tea(
+                1,
+                window.innerWidth,
+                window.innerHeight * Math.random(),
+                -0.5 * Math.random(),
+                -0.35 * Math.random(),
+                teaImg);
+            friendList.push(tea);
+        } else {
+            let cauldron = new Cauldron(
+                1,
+                window.innerWidth,
+                window.innerHeight * Math.random(),
+                -0.45 * Math.random(),
+                -0.25 * Math.random(),
+                cauldronImg);
+            friendList.push(cauldron);
         }
     }
 
@@ -37,18 +106,31 @@ function update(timestamp, progress) {
         enemyList[i].update(progress);
     }
 
-    return witch.collision(enemyList);
+    witch.collision(enemyList);
+
+
+    for (var k = 0; k < friendList.length; k++) {
+        friendList[k].update(progress);
+    }
+
+    witch.winCollision(friendList);
 }
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.drawImage(backgroundImg, 0, 0, window.innerWidth, window.innerHeight);
+
     witch.draw(ctx);
 
     for (var i = 0; i < enemyList.length; i++) {
         enemyList[i].draw(ctx);
     }
-}
 
+    for (var k = 0; k < friendList.length; k++) {
+        friendList[k].draw(ctx);
+    }
+}
 
 function keyUp(event) {
     if (event.key === "ArrowUp" || event.key === "ArrowDown" || event.key === "ArrowLeft" || event.key === "ArrowRight") {
@@ -73,19 +155,23 @@ function keyDown(event) {
 function loop(timestamp) {
     var progress = timestamp - lastRender;
 
-    let alive = update(timestamp, progress);
+    update(timestamp, progress);
 
     draw();
 
     lastRender = timestamp;
-    if (alive) {
-        window.requestAnimationFrame(loop)
+
+    if (witch.haveWon()) {
+        alert("You have won the game :D");
+    } else if (witch.haveLost()) {
+        alert("You have lost the game :C");
+    } else {
+        window.requestAnimationFrame(loop);
     }
 }
 
 
 window.onload = function () {
-    console.log("Engage");
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -94,10 +180,25 @@ window.onload = function () {
     window.addEventListener('keydown', keyDown, true);
     window.addEventListener('keyup', keyUp, true);
 
+    backgroundImg = new Image();
+    backgroundImg.src = "FreeSkyBackground-12.jpg";
+
     let img = new Image();
     img.src = "witch.svg";
 
-    witch = new Witch(10, 100, 100, img);
+    witch = new Witch(10, 100, 100, img, 0);
+
+    cauldronImg = new Image();
+    cauldronImg.src = "cauldron.svg";
+
+    teaImg = new Image();
+    teaImg.src = "tea.svg";
+
+    broomImg = new Image();
+    broomImg.src = "broom.svg";
+
+    moonImg = new Image();
+    moonImg.src = "moon.png";
 
     larryImg = new Image();
     larryImg.src = "larry.svg";
@@ -109,8 +210,10 @@ window.onload = function () {
     bleuImg.src = "bleu.svg";
 
     enemyList = [];
+    friendList = [];
 
     lastEnemyTime = 0;
+    lastFriendTime = 0;
 
     lastRender = 0;
     window.requestAnimationFrame(loop);
